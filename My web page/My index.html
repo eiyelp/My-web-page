@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的網站</title>
+<!-- 引入 Chart.js 函式庫 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+        color: #333;
+    }
+    .header {
+        background-color: #c8102e; /* Arsenal Red */
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 2em;
+    }
+    .nav {
+        text-align: center;
+        padding: 20px;
+    }
+    .nav-button {
+        background-color: #c8102e; /* Arsenal Red */
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        margin: 0 10px;
+        font-size: 1em;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+    }
+    /* 內容容器的通用樣式 */
+    .content-container {
+        width: 80%;
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        /* 預設隱藏 */
+        display: none;
+    }
+    .photo-container {
+        text-align: center;
+    }
+    .photo-container img {
+        max-width: 300px; /* 照片最大寬度 */
+        margin: 10px; /* 照片間距 */
+        border: 3px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+    /* MP4 影片播放器的樣式 */
+    .mp4-video-container video {
+        width: 100%; /* 讓影片寬度填滿容器 */
+        height: auto;
+        border-radius: 8px;
+    }
+</style>
+</head>
+<body>
+
+<div class="header">
+    我的網站
+</div>
+
+<div class="nav">
+    <a href="https://www.arsenal.com/" target="_blank" class="nav-button">Arsenal</a>
+    <a href="#" id="photo-button" class="nav-button">照片</a>
+    <a href="#" id="chart-button" class="nav-button">圖表</a>
+    <!-- 將「球場」按鈕替換為「影片」按鈕 -->
+    <a href="#" id="video-button" class="nav-button">影片</a>
+</div>
+
+<!-- 預設隱藏的照片容器 -->
+<div class="content-container photo-container" id="photo-container">
+    <img src="Arsenal_FC.svg.png" alt="照片一">
+</div>
+
+<!-- 預設隱藏的圖表容器 -->
+<div class="content-container" id="chart-container">
+    <canvas id="myChart"></canvas>
+</div>
+
+<!-- 新增：預設隱藏的 MP4 影片容器 -->
+<div class="content-container mp4-video-container" id="mp4-video-container">
+    <video controls>
+        <!-- 重要：請確認 MP4 檔案與此 HTML 檔案在同一個資料夾 -->
+        <source src="HIGHLIGHTS _ Arsenal vs Nottingham Forest (3-0) _ Zubimendi double & Gyokeres strike _ EPL.mp4" type="video/mp4">
+        您的瀏覽器不支援 Video 標籤。
+    </video>
+</div>
+
+
+<script>
+    // 宣告一個變數來存放圖表實體，避免重複創建
+    let chartInstance = null;
+
+    // 取得所有需要的元素
+    const photoButton = document.getElementById('photo-button');
+    const chartButton = document.getElementById('chart-button');
+    const videoButton = document.getElementById('video-button'); // 新增
+
+    const photoContainer = document.getElementById('photo-container');
+    const chartContainer = document.getElementById('chart-container');
+    const mp4VideoContainer = document.getElementById('mp4-video-container'); // 新增
+    
+    const chartElement = document.getElementById('myChart');
+
+    // 隱藏所有內容區塊的函式
+    function hideAllContainers() {
+        photoContainer.style.display = 'none';
+        chartContainer.style.display = 'none';
+        mp4VideoContainer.style.display = 'none';
+    }
+
+    // 為「照片」按鈕加上點擊事件監聽
+    photoButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        hideAllContainers(); // 先隱藏全部
+        photoContainer.style.display = 'block'; // 再顯示目標
+    });
+
+    // 為「圖表」按鈕加上點擊事件監聽
+    chartButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        hideAllContainers(); // 先隱藏全部
+        chartContainer.style.display = 'block'; // 再顯示目標
+
+        if (!chartInstance) {
+            chartInstance = new Chart(chartElement, {
+                type: 'bar',
+                data: {
+                    labels: ['日本', '中國大陸', '韓國', '美國'],
+                    datasets: [{
+                        label: '出國次數',
+                        data: [2, 5, 1, 4],
+                        backgroundColor: 'rgba(200, 16, 46, 0.5)',
+                        borderColor: 'rgba(200, 16, 46, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: { scales: { y: { beginAtZero: true } } }
+            });
+        }
+    });
+
+    // 為「影片」按鈕加上點擊事件監聽
+    videoButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        hideAllContainers(); // 先隱藏全部
+        mp4VideoContainer.style.display = 'block'; // 再顯示目標
+    });
+</script>
+
+</body>
+</html>
