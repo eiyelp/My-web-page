@@ -14,26 +14,16 @@
         color: #333;
 
         /* --- 背景圖片設定 --- */
-        /* 將 'YOUR_IMAGE_PATH_HERE.jpg' 替換成您的圖片路徑或網址 */
         background-image: url('nelson-ndongala-JGqZUfjXRUE-unsplash.jpg');
         
-        /* 讓圖片填滿整個畫面，可能會裁切部分圖片 */
         background-size: cover; 
-        
-        /* 將圖片置中 */
         background-position: center; 
-        
-        /* 背景圖片不重複 */
         background-repeat: no-repeat; 
-        
-        /* 當頁面滾動時，背景圖片固定不動 */
         background-attachment: fixed; 
-
-        /* 備用背景色，在圖片載入失敗時顯示 */
         background-color: #f0f0f0; 
     }
     .header {
-        background-color: rgba(200, 16, 46, 0.9); /* 稍微調高透明度讓背景隱約可見 */
+        background-color: rgba(200, 16, 46, 0.9);
         color: white;
         padding: 20px;
         text-align: center;
@@ -48,14 +38,13 @@
         color: white;
         border: none;
         padding: 15px 30px;
-        margin: 0 10px;
+        margin: 10px 10px; /* 增加垂直間距以利換行 */
         font-size: 1em;
         text-decoration: none;
         display: inline-block;
         cursor: pointer;
-        border-radius: 5px; /* 加上一點圓角更好看 */
+        border-radius: 5px;
     }
-    /* 內容容器的通用樣式 */
     .content-container {
         width: 80%;
         max-width: 900px;
@@ -63,9 +52,10 @@
         padding: 20px;
         border: 1px solid #ddd;
         border-radius: 8px;
-        /* 新增：為內容區塊加上白色背景，使其在背景圖片上更清晰 */
         background-color: rgba(255, 255, 255, 0.95);
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        /* 預設隱藏所有內容區塊 */
+        display: none; 
     }
     .photo-container {
         text-align: center;
@@ -82,6 +72,28 @@
         height: auto;
         border-radius: 8px;
     }
+    /* 同學網站連結的樣式 */
+    .classmate-links ul {
+        list-style: none;
+        padding: 0;
+    }
+    .classmate-links li {
+        margin: 15px 0;
+    }
+    .classmate-links a {
+        display: block;
+        padding: 15px;
+        background-color: #f5f5f5;
+        color: #c8102e;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    .classmate-links a:hover {
+        background-color: #e0e0e0;
+        transform: scale(1.02);
+    }
 </style>
 </head>
 <body>
@@ -95,16 +107,21 @@
     <a href="#" id="photo-button" class="nav-button">照片</a>
     <a href="#" id="chart-button" class="nav-button">圖表</a>
     <a href="#" id="video-button" class="nav-button">影片</a>
+    <!-- 新增：同學的網站按鈕 -->
+    <a href="#" id="classmate-button" class="nav-button">同學的網站</a>
 </div>
 
+<!-- 照片內容區塊 -->
 <div class="content-container photo-container" id="photo-container">
     <img src="Arsenal_FC.svg.png" alt="照片一">
 </div>
 
+<!-- 圖表內容區塊 -->
 <div class="content-container" id="chart-container">
     <canvas id="myChart"></canvas>
 </div>
 
+<!-- 影片內容區塊 -->
 <div class="content-container mp4-video-container" id="mp4-video-container">
     <video controls>
         <source src="HIGHLIGHTS _ Arsenal vs Nottingham Forest (3-0) _ Zubimendi double & Gyokeres strike _ EPL.mp4" type="video/mp4">
@@ -112,24 +129,39 @@
     </video>
 </div>
 
+<!-- 新增：同學網站的內容區塊 -->
+<div class="content-container classmate-links" id="classmate-container">
+    <h3>同學的網站連結：</h3>
+    <ul>
+        <li><a href="#" target="_blank">網站一：同學A的作品</a></li>
+        <li><a href="#" target="_blank">網站二：同學B的作品</a></li>
+        <li><a href="#" target="_blank">網站三：小組專題網站</a></li>
+    </ul>
+</div>
+
 
 <script>
     let chartInstance = null;
 
+    // 取得所有按鈕和容器的元素
     const photoButton = document.getElementById('photo-button');
     const chartButton = document.getElementById('chart-button');
     const videoButton = document.getElementById('video-button');
+    const classmateButton = document.getElementById('classmate-button'); // 新增
 
     const photoContainer = document.getElementById('photo-container');
     const chartContainer = document.getElementById('chart-container');
     const mp4VideoContainer = document.getElementById('mp4-video-container');
+    const classmateContainer = document.getElementById('classmate-container'); // 新增
     
     const chartElement = document.getElementById('myChart');
 
+    // 更新函式，加入新的容器
     function hideAllContainers() {
         photoContainer.style.display = 'none';
         chartContainer.style.display = 'none';
         mp4VideoContainer.style.display = 'none';
+        classmateContainer.style.display = 'none'; // 新增
     }
 
     photoButton.addEventListener('click', function(event) {
@@ -165,6 +197,13 @@
         event.preventDefault();
         hideAllContainers();
         mp4VideoContainer.style.display = 'block';
+    });
+
+    // 新增：「同學的網站」按鈕的點擊事件
+    classmateButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        hideAllContainers();
+        classmateContainer.style.display = 'block';
     });
 </script>
 
